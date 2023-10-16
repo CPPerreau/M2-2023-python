@@ -1,0 +1,6 @@
+tr:nth-child(even) {
+    background-color: #D6EEEE;
+  }
+h1{
+    font-size:30px;color: rgb(21, 172, 21);
+}
