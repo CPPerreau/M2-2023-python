@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Flask + Bokeh demo</title>
+
+  </head>
+  <body>
+	<table>
+	<tr>Mon premier graphique Bokeh</tr>
+	<tr>
+		<td>
+		{{ plot_div|indent(4)|safe }}
+        {{ plot_script|indent(4)|safe }}
+	   </td>
+		<td>un commentaire bidon fait avec <a href="https://demo.bokeh.org/">bokeh</a>
+			<br>https://hub.gke2.mybinder.org/user/bokeh-bokeh-notebooks-zofzz6f9/notebooks/tutorial/00%20-%20Introduction%20and%20Setup.ipynb
+		</td>
+		</tr>
+	</table>
+	
+	
+	       <!-- SCRIPTS section at the end of the HTML file -->
+       {{ js_resources|indent(4)|safe }}
+       {{ css_resources|indent(4)|safe }}
+  </body>
+</html>

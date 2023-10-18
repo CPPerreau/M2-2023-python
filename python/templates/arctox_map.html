@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Arctox map demo</title>
+    
+    
+  </head>
+  <body>
+      <p>Arctox map title</p>
+      <div id="plot_content">
+        {{ plot_script|indent(4)|safe }}
+        {{ plot_div|indent(4)|safe }}
+      </div>
+    <form>
+        <select name="bird" id="bird-select">
+            choose a bird amongst the available list
+            <option value="">--Please choose a state to filter on--</option>
+            <option value="LIAK10EG32">LIAK10EG32</option>
+            <option value="LIAK10EG05">LIAK10EG05</option>
+            <option value="LIAK10EG23">LIAK10EG23</option>
+        </select>
+    </form>
+    <div id="arctox_data_table">
+        {{ table_div|indent(4)|safe }}
+    </div>
+    <p>-----------------------------</p>
+    <button onclick="count()">Click here and see what happens</button>
+    <p>-----------------------------</p>
+    <button onclick="window.location.reload();">And now refresh your page</button>
+    
+    
+   <!-- SCRIPTS section at the end of the HTML file -->
+      {{ js_resources|indent(4)|safe }}
+      {{ css_resources|indent(4)|safe }}
+      <script>
+        var i = 1;
+  
+        function count(){
+            i = i+1;
+            console.log(i);
+            alert('I come here '+i+' times'); 
+            return i;
+        }
+  
+      </script>
+    <script type="text/javascript" src="static/jquery-3.2.1.min.js"></script>
+
+    <!-- 
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    -->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#bird-select').change(function(event){
+              event.preventDefault();
+              console.log($("#bird-select").val());
+              $.getJSON('/ajaxviz', {
+                  bird: $("#bird-select").val(),
+                  }, function(data) {
+                      $('#plot_content').html(data.html_plot);
+              });
+              return false;
+          });
+        });
+      </script>
+      
+  </body>
+</html>

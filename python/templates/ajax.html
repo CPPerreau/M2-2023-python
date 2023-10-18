@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Flask + Bokeh + Ajax demo</title>
+    
+    
+  </head>
+  <body>
+      <p>The graph will show the number of citations for toponyms by state in 1787</p>
+      <div id="plot_content">
+        {{ plot_script|indent(4)|safe }}
+        {{ plot_div|indent(4)|safe }}
+      </div>
+    <form>
+        <select name="state" id="state-select">
+            choose a state amongst the available list
+            <option value="">--Please choose a state to filter on--</option>
+            <option value="USA">United States of America</option>
+            <option value="Royaume de Piémont-Sardaigne">Piémont</option>
+            <option value="Unknown">Unknown</option>
+        </select>
+    </form>
+    <p>-----------------------------</p>
+    <button onclick="count()">Click here and see what happens</button>
+    <p>-----------------------------</p>
+    <button onclick="window.location.reload();">And now refresh your page</button>
+    
+    
+   <!-- SCRIPTS section at the end of the HTML file -->
+      {{ js_resources|indent(4)|safe }}
+      {{ css_resources|indent(4)|safe }}
+      <script>
+        var i = 1;
+  
+        function count(){
+            i = i+1;
+            console.log(i);
+            alert('I come here '+i+' times'); 
+            return i;
+        }
+  
+      </script>
+    <script type="text/javascript" src="static/jquery-3.2.1.min.js"></script>
+
+    <!-- 
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    -->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#state-select').change(function(event){
+              event.preventDefault();
+              console.log($("#state-select").val());
+              $.getJSON('/ajaxviz', {
+                  state: $("#state-select").val(),
+                  }, function(data) {
+                      $('#plot_content').html(data.html_plot);
+              });
+              return false;
+          });
+        });
+      </script>
+      
+  </body>
+</html>
