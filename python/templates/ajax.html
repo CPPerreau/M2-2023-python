@@ -3,25 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Flask + Bokeh + Ajax demo</title>
+    <title>Flask + Bokeh + Ajax with Portic data</title>
     
     
   </head>
   <body>
-      <p>The graph will show the number of citations for toponyms by state in 1787</p>
+      <p>The graph will show <ol><li>first the number of ports per admiralty in 17872</li> <li>and then you can get the traffic for each port per admiralty in 1787</li></ol></p>
       <div id="plot_content">
         {{ plot_script|indent(4)|safe }}
         {{ plot_div|indent(4)|safe }}
       </div>
     <form>
-        <select name="state" id="state-select">
-            choose a state amongst the available list
-            <option value="">--Please choose a state to filter on--</option>
-            <option value="USA">United States of America</option>
-            <option value="Royaume de Piémont-Sardaigne">Piémont</option>
+        <select name="admiralty" id="admiralty-select">
+            choose an admiralty amongst the available list
+            <option value="">--Please choose an admiralty to filter on--</option>
+            <option value="Rochefort">Rochefort</option>
             <option value="Unknown">Unknown</option>
+            {{ liste_options|indent(4)|safe }}
         </select>
     </form>
+			
     <p>-----------------------------</p>
     <button onclick="count()">Click here and see what happens</button>
     <p>-----------------------------</p>
@@ -51,11 +52,11 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-          $('#state-select').change(function(event){
+          $('#admiralty-select').change(function(event){
               event.preventDefault();
-              console.log($("#state-select").val());
+              console.log($("#admiralty-select").val());
               $.getJSON('/ajaxviz', {
-                  state: $("#state-select").val(),
+                  admiralty: $("#admiralty-select").val(),
                   }, function(data) {
                       $('#plot_content').html(data.html_plot);
               });

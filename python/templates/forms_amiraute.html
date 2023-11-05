@@ -3,22 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Flask + Bokeh demo</title>
+    <title>Flask + Bokeh + Forms </title>
 
   </head>
   <body>
 	<table>
-	<tr><h2>Mon premier graphique Bokeh<h2> <br> </tr>
+	<tr><h2>Selectionner une valeur pour modifier un graphique <h2> <br> </tr>
 	<tr>
 		<td>
 		{{ plot_div|indent(4)|safe }}
         {{ plot_script|indent(4)|safe }}
 	   </td>
 		<td>un commentaire bidon fait avec <a href="https://demo.bokeh.org/">bokeh</a>
-			<br>https://hub.gke2.mybinder.org/user/bokeh-bokeh-notebooks-zofzz6f9/notebooks/tutorial/00%20-%20Introduction%20and%20Setup.ipynb
+			<br>que vous pouvez changer avec : 
+			<br>{{ message|indent(4)|safe }}
 		</td>
 	</tr>
 		<tr>
+			<td span="2">
 		<form action="/formAmiraute">
 			<label for="cars">Choose a admiralty:</label>
 			<select id="cars" name="admiralty">
@@ -29,6 +31,7 @@
 			</select>
 			<input type="submit" value="Submit">
 		</form>
+			</td>
 		</tr>
 	</table>
 	
