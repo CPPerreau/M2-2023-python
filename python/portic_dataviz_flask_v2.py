@@ -2,6 +2,7 @@
 # -*-coding:UTF-8 -*
 '''
 Created on 12 october 2020
+Updated on 31/10/2023
 @author: Christine PLUMEJEAUD-PERREAU, U.M.R 7266 LIENSs
 Master 2 course : Web programming with python
 
@@ -9,32 +10,40 @@ Introduce Bokeh
 1. Make your first Hello World using Flask templating 
 2. Build a viz using dummy figures to show a graphic in the Web page using Bokeh
 '''
+from flask import Flask, render_template
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.resources import INLINE
-from flask import Flask, render_template
+from bokeh.models import ColumnDataSource
+from bokeh.transform import factor_cmap
+import bokeh.palettes as bp
+import pandas as pd
+import json
+import requests
+
 app = Flask(__name__)
 
 
 @app.route('/vizports')
 def bokeh():
-    
-    from bokeh.io import show
-    from bokeh.models import ColumnDataSource
-    import bokeh.palettes as bp
-    from bokeh.plotting import figure
-    from bokeh.transform import factor_cmap
-    import pandas as pd
-    import requests
-    import folium
-    from folium.plugins import MarkerCluster 
-    from IPython.display import display
-    
-    url_to_read = "http://data.portic.fr/api/ports?param=&shortenfields=false&both_to=false&date=1787"
 
-    resp = requests.get(url_to_read) #Récuperer les données
-    df = pd.DataFrame(resp.json())
+    data_local = True
+    if data_local : 
+        #filename = "C:\Travail\Enseignement\Cours_M2_python\Exemple\ports.json"
+        filename = "C:/Travail/Enseignement/Cours_M2_python/2023/code/resultats/export3_port_geojson.geojson"
+        output = open(filename, "r")
+        data = json.load(output)
+        df = pd.DataFrame(data)
+    else:
+        url_to_read = "http://data.portic.fr/api/ports?"
+        resp = requests.get(url_to_read) #Récuperer les données      
+        df = pd.DataFrame(resp.json())
     
+    print(type(df))
+    print(df.columns)
+
+    #Look the tutorial for a bar charts
+    #https://docs.bokeh.org/en/latest/docs/user_guide/basic/bars.html
     test = df.groupby('admiralty')['ogc_fid'].count()
     fruits = [i for i in test.index]
     counts = [i for i in test.values]
