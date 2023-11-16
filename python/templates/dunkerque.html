@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux migratoires Dunkerque</title>
+    {{ js_resources|safe }}
+    {{ css_resources|safe }}
+   
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        #graph-container {
+            flex: 0.2;  /* Adjust the width of the graph container */
+            margin: 10px;
+        }
+
+        #maps-container {
+            flex: 1;
+            margin: 10px;
+        }
+
+        #maps-container div {
+            margin-bottom: 20px;
+        }
+
+        .map-title, .graph-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph-container">
+        <h1>Cartographie des flux migratoires à Dunkerque</h1>
+        <div>
+            <h2 class="graph-title">Graphique des conditions météo au mois d'août à Dunkerque en 2022</h2>
+            {{ p_div|safe }}
+             {{ p_script|safe }}
+        </div>
+        <h2>Choosen date for animation</h2>
+        <div id="date-param">
+            {{ p_msg|safe }}
+        </div>
+    </div>
+    
+    <div id="maps-container">
+        <div>
+            <h2 class="map-title">Carte du littoral</h2>
+            {{ m_html|safe }}
+        </div>
+        <div>
+            <h2 class="map-title">Carte du camp</h2>
+            {{ m2_html|safe }}
+        </div>
+    </div>
+</body>
+</html>
